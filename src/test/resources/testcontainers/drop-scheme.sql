@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS detalle_compra
+DROP TABLE IF EXISTS compras
+DROP TABLE IF EXISTS detalle_venta
+DROP TABLE IF EXISTS ventas
+DROP TABLE IF EXISTS productos
+DROP TABLE IF EXISTS proveedores
+DROP TABLE IF EXISTS clientes
+
+
