@@ -1,6 +1,7 @@
 package org.ferreteria.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -55,6 +56,7 @@ public class Client {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonManagedReference
     @OneToMany(mappedBy = "client",orphanRemoval = true,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<Sale> sales = new ArrayList<>();
 

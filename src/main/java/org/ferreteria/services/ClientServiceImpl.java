@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
-
+/**
+ * servicio con métodos para obtener, editar y eliminar clientes
+ */
 @Service
 @Transactional
 public class ClientServiceImpl implements ClientService{
@@ -28,10 +30,18 @@ public class ClientServiceImpl implements ClientService{
         return repo.findAll();
     }
 
+    @Override
+    public List<Client> findAllWithSales() {
+        return StreamSupport.stream(
+                repo.findAllWithSales().spliterator(),
+                false
+        ).toList();
+    }
+
     @Transactional(readOnly = true)
     @Override
     public Client findClientWithSales(Long id) {
-        return repo.findClientWithSales(id).orElse(null);
+        return repo.findClientWithSales(id).orElseThrow(() -> new ResourceNotFound("Client with id " + id + " couldn't be found.") );
     }
 
     @Override
@@ -43,7 +53,7 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public Client findById(Long id) {
         return repo.findById(id).orElseThrow(
-                () -> new ResourceNotFound("Client with id " + id + " couldn't be found. doesn't exit"));
+                () -> new ResourceNotFound("Client with id " + id + " couldn't be found."));
     }
 
 

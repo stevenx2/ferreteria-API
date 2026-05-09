@@ -18,4 +18,9 @@ public interface ClientRepo extends JpaRepository<Client,Long> {
      */
     @Query("SELECT c FROM Client c LEFT JOIN FETCH c.sales WHERE c.id =:client_id")
     Optional<Client> findClientWithSales(@Param("client_id") Long id);
+
+
+    @Query("SELECT c FROM Client c LEFT JOIN FETCH c.sales")
+    Iterable<Client> findAllWithSales();
+
 }

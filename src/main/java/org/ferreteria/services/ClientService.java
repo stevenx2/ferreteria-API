@@ -9,6 +9,7 @@ public interface ClientService {
 
 
     List<Client> findAll();
+    List<Client> findAllWithSales();
 
     Client findClientWithSales(Long id);
 

@@ -1,5 +1,6 @@
 package org.ferreteria.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -35,6 +36,7 @@ public class Sale {
     @Column(name = "fecha")
     private LocalDate date;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Client client;
