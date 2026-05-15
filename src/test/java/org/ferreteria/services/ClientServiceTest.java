@@ -21,6 +21,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * testing del servicio de clientes con base de datos
+ */
 
 @Sql({"classpath:/testcontainers/drop-scheme.sql","classpath:/testcontainers/create-scheme.sql"})
 @SqlMergeMode(SqlMergeMode.MergeMode.MERGE)
