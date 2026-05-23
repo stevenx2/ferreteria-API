@@ -22,7 +22,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name = "VENTAS")
+@Table(name = "ventas")
 public class Sale {
 
 

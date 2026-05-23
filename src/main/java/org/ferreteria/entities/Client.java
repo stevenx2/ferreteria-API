@@ -22,7 +22,7 @@ import java.util.List;
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "CLIENTES")
+@Table(name = "clientes")
 public class Client {
 
 

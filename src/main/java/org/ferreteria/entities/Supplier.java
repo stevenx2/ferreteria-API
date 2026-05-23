@@ -17,7 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Setter
 @Getter
-@Table(name = "PROVEEDORES")
+@Table(name = "proveedores")
 @Entity
 public class Supplier {
 
