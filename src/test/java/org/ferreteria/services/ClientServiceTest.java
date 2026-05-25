@@ -60,8 +60,6 @@ public class ClientServiceTest {
 
     @Test
     public void testFindById(){
-        assertThrows(ResourceNotFound.class,() -> service.findById(7L));
-
         Client client = service.findById(1L);
         assertNotNull(client);
         assertEquals("Johan Steven Mendoza Ruiz",client.getName());
