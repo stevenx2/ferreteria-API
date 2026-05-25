@@ -3,10 +3,14 @@ package org.ferreteria.services;
 import org.ferreteria.entities.Client;
 import org.ferreteria.problem.ResourceNotFound;
 import org.ferreteria.repositories.ClientRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
@@ -15,10 +19,14 @@ import java.util.stream.StreamSupport;
  */
 @Service
 @Transactional
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
 
 
     private final ClientRepo repo;
+
+    @Autowired
+    private MessageSource messageSource;
+
 
     public ClientServiceImpl(ClientRepo repo) {
         this.repo = repo;
@@ -41,7 +49,13 @@ public class ClientServiceImpl implements ClientService{
     @Transactional(readOnly = true)
     @Override
     public Client findClientWithSales(Long id) {
-        return repo.findClientWithSales(id).orElseThrow(() -> new ResourceNotFound("Client with id " + id + " couldn't be found.") );
+        return repo.findClientWithSales(id).orElseThrow(() -> new ResourceNotFound(
+                messageSource.getMessage(
+                        "error.client.notFound",
+                        new Object[]{id},
+                        LocaleContextHolder.getLocale()
+                )
+        ));
     }
 
     @Override
@@ -53,7 +67,13 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public Client findById(Long id) {
         return repo.findById(id).orElseThrow(
-                () -> new ResourceNotFound("Client with id " + id + " couldn't be found."));
+                () -> new ResourceNotFound(
+                        messageSource.getMessage(
+                                "error.client.notFound",
+                                new Object[]{id},
+                                LocaleContextHolder.getLocale()
+                        )
+                ));
     }
 
 
@@ -68,8 +88,14 @@ public class ClientServiceImpl implements ClientService{
 
     @Override
     public void deleteById(Long id) {
-        if(!repo.existsById(id)){
-            throw new ResourceNotFound("The client with id " + id + " that you want to delete doesn't exist");
+        if (!repo.existsById(id)) {
+            throw new ResourceNotFound(
+                    messageSource.getMessage(
+                            "error.client.toDelete.notFound",
+                            new Object[]{id},
+                            LocaleContextHolder.getLocale()
+                    )
+            );
         }
 
         repo.deleteById(id);
