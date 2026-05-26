@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
+
 /**
  * controlador de errores
  */
@@ -30,6 +32,22 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorDetails,HttpStatus.NOT_FOUND);
 
+    }
+
+
+    /**
+     * devuelve un json con un mensaje de error un usuario entra a un recurso al cual no tiene permisos,
+     * ej: un usuario común pidiendo un recurso solo permitido para administradores
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> accessDenied(AccessDeniedException exception){
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                exception.getMessage(),
+                HttpStatus.FORBIDDEN.value()
+        );
+
+        return new ResponseEntity<>(errorDetails,HttpStatus.FORBIDDEN);
     }
 
 

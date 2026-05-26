@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
+/**
+ * clase de configuración para el messageSource global de la aplicación
+ */
 @Configuration
 public class AppConfig {
 

@@ -41,7 +41,7 @@ public class MockClientServiceTest {
     Client client2;
 
     /**
-     * datos de prubas de clientes
+     * Datos de prubas de clientes
      */
     @BeforeEach
     void beforeEach(){
@@ -65,7 +65,7 @@ public class MockClientServiceTest {
 
 
     /**
-     * test con mocks al buscar todos los clientes
+     * Test con mocks al buscar todos los clientes
      */
     @Test
     void testFindAll(){
@@ -84,7 +84,7 @@ public class MockClientServiceTest {
 
 
     /**
-     * test al buscar un cliente por id de forma correcta
+     * Test al buscar un cliente por id de forma correcta
      */
     @Test
     void testFindById(){

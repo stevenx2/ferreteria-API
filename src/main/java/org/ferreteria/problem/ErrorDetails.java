@@ -10,14 +10,15 @@ import java.time.LocalDateTime;
 @Getter
 public class ErrorDetails {
 
-    private LocalDateTime timestamp;
+    //es de tipo string y no LocalDataTime por unos errores en cuanto a mapeo.
+    private String timestamp;
 
     private String message;
 
     private int status;
 
     public ErrorDetails(String message, int status) {
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = LocalDateTime.now().toString();
         this.message = message;
         this.status = status;
     }

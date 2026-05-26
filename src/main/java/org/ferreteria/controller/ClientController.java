@@ -3,11 +3,10 @@ package org.ferreteria.controller;
 
 import org.ferreteria.entities.Client;
 import org.ferreteria.services.ClientService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +34,12 @@ public class ClientController {
     public ResponseEntity<Client> findById(@PathVariable("id") Long id){
         Client client = clientService.findClientWithSales(id);
         return ResponseEntity.ok(client);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Client> deleteById(@PathVariable("id") Long id){
+        Client deletedClient = clientService.deleteById(id);
+        return ResponseEntity.ok(deletedClient);
     }
 }

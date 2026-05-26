@@ -87,17 +87,17 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        if (!repo.existsById(id)) {
-            throw new ResourceNotFound(
-                    messageSource.getMessage(
-                            "error.client.toDelete.notFound",
-                            new Object[]{id},
-                            LocaleContextHolder.getLocale()
-                    )
-            );
-        }
+    public Client deleteById(Long id) {
+
+        Client client = repo.findById(id).orElseThrow(() -> new ResourceNotFound(
+                messageSource.getMessage(
+                        "error.client.toDelete.notFound",
+                        new Object[]{id},
+                        LocaleContextHolder.getLocale()
+                )
+        ));
 
         repo.deleteById(id);
+        return  client;
     }
 }

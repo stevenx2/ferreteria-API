@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * test del homeController. solo es para validar que la aplicación arranca.
+ * Test del homeController. Solo es para validar que la aplicación arranca.
  */
 @ExtendWith(MockitoExtension.class)
 public class HomeControllerTest {
@@ -38,7 +38,7 @@ public class HomeControllerTest {
 
 
     /**
-     * valida código 200 y cuerpo de la petición
+     * Valida código 200 y cuerpo de la petición
      */
     @Test
     public void homeTest() throws Exception {

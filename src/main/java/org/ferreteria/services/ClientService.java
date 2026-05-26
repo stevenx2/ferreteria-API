@@ -20,5 +20,5 @@ public interface ClientService {
     List<Client> findByName(String name);
 
 
-    void deleteById(Long id);
+    Client deleteById(Long id);
 }
