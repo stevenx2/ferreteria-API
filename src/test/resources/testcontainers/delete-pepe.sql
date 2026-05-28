@@ -1,0 +1,1 @@
+DELETE FROM clientes WHERE nombre = 'Pepe test';

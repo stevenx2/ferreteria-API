@@ -1,5 +1,6 @@
 package org.ferreteria.services;
 
+import org.ferreteria.dto.ClientDto;
 import org.ferreteria.entities.Client;
 import org.ferreteria.problem.ResourceNotFound;
 import org.ferreteria.repositories.ClientRepo;
@@ -59,9 +60,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client save(Client client) {
-        return repo.save(client);
+    public Client save(ClientDto client) {
+
+        Client clientToSave = new Client();
+        clientToSave.setName(client.getName());
+        clientToSave.setAddress(client.getAddress());
+        clientToSave.setPhoneNumber(client.getPhoneNumber());
+
+
+        return repo.save(clientToSave);
     }
+
+
 
     @Transactional(readOnly = true)
     @Override
@@ -77,14 +87,34 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    /**
+     * Busca un cliente por su nombre, este no necesariamente debe ser exacto, con solo contener una parte
+     * del nombre cuenta. ej: si buscas joh automáticamente te devuelve los clientes que lleven joh en su nombre.
+     * @param name nombre del cliente
+     * @return lista con los clientes que tiene ese nombre o parte de el.
+     */
     @Transactional(readOnly = true)
     @Override
     public List<Client> findByName(String name) {
-        return StreamSupport.stream(
-                repo.findByName(name).spliterator(),
+        List<Client> clients = StreamSupport.stream(
+                repo.findByNameLike(name).spliterator(),
                 false
         ).toList();
+
+        if(clients.isEmpty()){
+            throw new ResourceNotFound(
+                    messageSource.getMessage(
+                            "error.client.notFound.byName",
+                            new Object[]{name},
+                            "por defecto",
+                            LocaleContextHolder.getLocale()
+                    )
+            );
+        }
+
+        return clients;
     }
+
 
     @Override
     public Client deleteById(Long id) {
@@ -100,4 +130,11 @@ public class ClientServiceImpl implements ClientService {
         repo.deleteById(id);
         return  client;
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return repo.existsById(id);
+    }
+
+
 }

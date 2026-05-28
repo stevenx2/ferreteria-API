@@ -26,7 +26,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
+/**
+ * Estos tests fueron con el simple propósito de practicar con mocks, no voy a agregar más tests a esta clase.
+ */
 @ExtendWith(MockitoExtension.class)
 public class MockClientServiceTest {
 

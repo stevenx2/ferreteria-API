@@ -1,5 +1,6 @@
 package org.ferreteria.services;
 
+import org.ferreteria.dto.ClientDto;
 import org.ferreteria.entities.Client;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface ClientService {
 
     Client findClientWithSales(Long id);
 
-    Client save(Client client);
+    Client save(ClientDto client);
 
     Client findById(Long id);
 
@@ -21,4 +22,7 @@ public interface ClientService {
 
 
     Client deleteById(Long id);
+
+    boolean existsById(Long id);
+
 }
