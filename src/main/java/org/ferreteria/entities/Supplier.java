@@ -30,22 +30,16 @@ public class Supplier {
 
     @EqualsAndHashCode.Include
     @ToString.Include
-    @Size(min = 4,max = 30)
-    @NotBlank(message = "el nombre del proveedor no puede estar vacio")
     @Column(name = "nombre",length = 30)
     private String name;
 
     @EqualsAndHashCode.Include
     @ToString.Include
-    @NotBlank(message = "el telefono es obligatorio")
-    @Pattern(regexp = "\\d{10}", message = "El teléfono debe contener exactamente 10 dígitos")
     @Column(name = "telefono")
     private String phoneNumber;
 
     @EqualsAndHashCode.Include
     @ToString.Include
-    @NotBlank(message = "La dirección es obligatoria")
-    @Size(max = 100, message = "La dirección no puede superar los 100 caracteres")
     @Column(name = "direccion",length = 100)
     private String address;
 

@@ -64,10 +64,29 @@ public class ClientServiceTest {
     )
     @Test
     public void testSaveClient() {
-        ClientDto clientDto = new ClientDto("Pepe test", "4444444444", "calle 203");
+        ClientDto clientDto = new ClientDto(100L,"Pepe test", "4444444444", "calle 203");
 
         service.save(clientDto);
         assertEquals(7, service.findAll().size());
+
+    }
+
+
+    @Sql(
+            value = "classpath:/testcontainers/update-johan.sql",
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+    )
+    @Test
+    public void testUpdateClient(){
+
+        ClientDto client = new ClientDto(1L,"Johan Mendoza","4333333333","nueva dirección");
+        service.update(client);
+
+        Client johan = service.findById(1L);
+        assertNotNull(johan);
+        assertEquals("Johan Mendoza",johan.getName());
+        assertEquals(1L,johan.getId());
+        assertEquals(6,service.findAll().size()); // valido que los registros son los mismos que antes y no se insertó uno nuevo en lugar de actualizarlo
 
     }
 

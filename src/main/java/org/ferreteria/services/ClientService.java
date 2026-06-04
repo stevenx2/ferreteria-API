@@ -4,7 +4,6 @@ import org.ferreteria.dto.ClientDto;
 import org.ferreteria.entities.Client;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ClientService {
 
@@ -15,6 +14,8 @@ public interface ClientService {
     Client findClientWithSales(Long id);
 
     Client save(ClientDto client);
+
+    void update(ClientDto client);
 
     Client findById(Long id);
 

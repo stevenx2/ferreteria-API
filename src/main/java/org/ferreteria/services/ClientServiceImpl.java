@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
@@ -61,16 +60,28 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client save(ClientDto client) {
-
         Client clientToSave = new Client();
         clientToSave.setName(client.getName());
         clientToSave.setAddress(client.getAddress());
         clientToSave.setPhoneNumber(client.getPhoneNumber());
 
-
         return repo.save(clientToSave);
     }
 
+    @Override
+    public void update(ClientDto client) {
+        Client clientToSave = repo.findById(client.getId()).orElse(null);
+
+        clientToSave = Stream.of(clientToSave)
+                .map(c -> {
+                    c.setName(client.getName());
+                    c.setAddress(client.getAddress());
+                    c.setPhoneNumber(client.getPhoneNumber());
+                    return c;
+                }).findFirst().orElse(null);
+
+        repo.save(clientToSave);
+    }
 
 
     @Transactional(readOnly = true)

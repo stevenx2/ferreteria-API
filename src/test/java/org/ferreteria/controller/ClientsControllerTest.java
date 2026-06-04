@@ -1,29 +1,21 @@
 package org.ferreteria.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ferreteria.dto.ClientDto;
 import org.ferreteria.entities.Client;
 import org.ferreteria.entities.Sale;
-import org.ferreteria.problem.GlobalExceptionHandler;
 import org.ferreteria.problem.ResourceNotFound;
 import org.ferreteria.security.SecurityCfg;
 import org.ferreteria.services.ClientService;
-import org.ferreteria.services.ClientServiceImpl;
 import org.ferreteria.web.WebConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -31,13 +23,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.hasItems;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -46,8 +36,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Tests para el controlador de clientes con Mocks
  */
 
-@SpringJUnitWebConfig({WebConfig.class, SecurityCfg.class, ClientControllerTest.MockConfig.class})
-public class ClientControllerTest {
+@SpringJUnitWebConfig({WebConfig.class, SecurityCfg.class, ClientsControllerTest.MockConfig.class})
+public class ClientsControllerTest {
 
     @Autowired
     private WebApplicationContext ctx;
@@ -243,7 +233,7 @@ public class ClientControllerTest {
 
         when(service.existsById(anyLong())).thenReturn(true);
 
-        ClientDto client = new ClientDto("Franco", "4444444444", "Carrera 13");
+        ClientDto client = new ClientDto(100L,"Franco", "4444444444", "Carrera 13");
 
         mockMvc.perform(
                 put("/api/v1/clients/" + 1)
@@ -265,7 +255,7 @@ public class ClientControllerTest {
         /**
          * Paso todos los valores de manera incorrecta para ocasionar el error de validación al actualizar
          */
-        ClientDto client = new ClientDto("F", "444444444", "CarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarrera");
+        ClientDto client = new ClientDto(100L,"F", "444444444", "CarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarreraCarrera");
 
 
         mockMvc.perform(
@@ -293,7 +283,7 @@ public class ClientControllerTest {
         response.setId(100L);
 
 
-        ClientDto param = new ClientDto("Johan", "5555555555", "Calle 13");
+        ClientDto param = new ClientDto(100L,"Johan", "5555555555", "Calle 13");
 
         when(service.save(any(ClientDto.class)))
                 .thenReturn(response);

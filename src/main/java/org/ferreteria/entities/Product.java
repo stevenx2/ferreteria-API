@@ -4,10 +4,8 @@ package org.ferreteria.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
 
 
 @EqualsAndHashCode
@@ -16,7 +14,10 @@ import lombok.ToString;
 @Getter
 @Table(name = "productos")
 @Entity
+@NoArgsConstructor
 public class Product {
+
+
 
 
     @Id
@@ -25,8 +26,6 @@ public class Product {
     private Long id;
 
 
-    @NotBlank(message = "el nombre del producto no debe estar en blanco")
-    @Size(min = 3,max = 30,message = "el nombre del producto debe estar entre 3 y 30 caracteres")
     @Column(name = "nombre")
     private String name;
 
@@ -39,4 +38,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "id_proveedor")
     private Supplier supplier;
+
+
+
 }

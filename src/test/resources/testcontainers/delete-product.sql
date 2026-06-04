@@ -1,0 +1,1 @@
+DELETE FROM productos WHERE nombre = 'Nuevo producto para tests'

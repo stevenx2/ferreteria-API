@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import static org.ferreteria.utils.JsonCreator.createFieldsErrorJson;
+
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +25,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/v1/clients")
-public class ClientController {
+public class ClientsController {
 
     private final ClientService clientService;
 
@@ -31,7 +33,7 @@ public class ClientController {
     @Autowired
     private MessageSource messageSource;
 
-    public ClientController(ClientService clientService) {
+    public ClientsController(ClientService clientService) {
         this.clientService = clientService;
     }
 
@@ -53,15 +55,11 @@ public class ClientController {
     }
 
 
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Client> deleteById(@PathVariable("id") Long id) {
         Client deletedClient = clientService.deleteById(id);
         return ResponseEntity.ok(deletedClient);
     }
-
-
 
 
     /**
@@ -73,10 +71,10 @@ public class ClientController {
             @Valid @RequestBody ClientDto clientDto,
             BindingResult bindingResult
 
-            ) {
+    ) {
 
         // Si el id del cliente no existe lanzo una excepción con el idioma del usuario. Este tipo de excepción es atrapada por el GlobalExcepción handler, el cual devuelve una respuesta del error en formato json
-        if(!clientService.existsById(id)){
+        if (!clientService.existsById(id)) {
             throw new ResourceNotFound(
                     messageSource.getMessage(
                             "error.client.notFound",
@@ -94,30 +92,23 @@ public class ClientController {
          *  - dirección no mayor a 100 caracteres
          *  entonces devuelvo la respuesta con código de estado 400 (bad request) y un json que tiene como claves el campo y como valores el tipo del error.
          */
-        if(bindingResult.hasErrors()){
-            Map<String,String> errores = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(fieldError -> {
-                 errores.put(fieldError.getField(),fieldError.getDefaultMessage());
-            });
-
-            return ResponseEntity.badRequest().body(errores);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(createFieldsErrorJson(bindingResult.getFieldErrors()));
         }
 
 
-
-
-        clientService.save(clientDto);
+        clientDto.setId(id);
+        clientService.update(clientDto);
         return ResponseEntity.noContent().build();
 
     }
-
 
 
     @PostMapping
     public ResponseEntity<?> saveClient(
             @Valid @RequestBody ClientDto clientDto,
             BindingResult bindingResult
-    ){
+    ) {
 
 
         /**
@@ -127,13 +118,8 @@ public class ClientController {
          *  - dirección no mayor a 100 caracteres
          *  entonces devuelvo la respuesta con código de estado 400 (bad request) y un json que tiene como claves el campo y como valores el tipo del error.
          */
-        if(bindingResult.hasErrors()){
-            Map<String,String> errores = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(fieldError -> {
-                errores.put(fieldError.getField(),fieldError.getDefaultMessage());
-            });
-
-            return ResponseEntity.badRequest().body(errores);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(createFieldsErrorJson(bindingResult.getFieldErrors()));
         }
 
         Client savedClient = clientService.save(clientDto);
@@ -148,11 +134,6 @@ public class ClientController {
         return ResponseEntity.created(uri).body(savedClient);
 
     }
-
-
-
-
-
 
 
 }
