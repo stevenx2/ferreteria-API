@@ -1,6 +1,7 @@
 package org.ferreteria.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SupplierDto {
 
+    @Null
     private Long id;
 
     @Size(min = 3,max = 40, message = "{entities.error.name.size}")

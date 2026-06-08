@@ -1,0 +1,1 @@
+DELETE FROM proveedores WHERE nombre = 'Nuevo proveedor'

@@ -2,6 +2,7 @@ package org.ferreteria.problem;
 
 
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.nio.file.AccessDeniedException;
 
 /**
- * controlador de errores
+ * Controlador de errores
  */
 
 @RestControllerAdvice
@@ -18,7 +19,7 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * lanzado automáticamente cuando un recurso no existe
+     * Lanzado automáticamente cuando un recurso no existe
      * @param resourceNotFound el tipo de excepción que fue lanzada con su mensaje descriptivo
      * @return respuesta json con la hora, mensaje y código de estado del error.
      */
@@ -36,7 +37,7 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * devuelve un json con un mensaje de error un usuario entra a un recurso al cual no tiene permisos,
+     * Devuelve un json con un mensaje de error un usuario entra a un recurso al cual no tiene permisos,
      * ej: un usuario común pidiendo un recurso solo permitido para administradores
      */
     @ExceptionHandler(AccessDeniedException.class)
@@ -48,6 +49,20 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errorDetails,HttpStatus.FORBIDDEN);
+    }
+
+
+    /**
+     * Cuando se realiza algo en la base de datos que viola la integridad de la base de datos, ej: Querer eliminar un proveedor que tiene productos
+     */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleDataIntegrity(DataIntegrityViolationException ex) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                ex.getMessage(),
+                HttpStatus.CONFLICT.value()
+        );
+
+        return new ResponseEntity<>(errorDetails,HttpStatus.CONFLICT);
     }
 
 

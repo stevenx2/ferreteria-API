@@ -13,4 +13,8 @@ public interface SupplierRepo extends JpaRepository<Supplier,Long> {
     Iterable<Supplier> findByIdWithProducts(@Param("id") Long id);
 
 
+    @Query("SELECT s FROM Supplier s WHERE s.name LIKE %:name%")
+    Iterable<Supplier> findByNameLike(@Param("name") String name);
+
+
 }
