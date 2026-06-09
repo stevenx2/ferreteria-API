@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Tests para el controlador de clientes con Mocks
  */
 
-@SpringJUnitWebConfig({WebConfig.class, SecurityCfg.class, ClientsControllerTest.MockConfig.class})
+@SpringJUnitWebConfig({MockConfig.class})
 public class ClientsControllerTest {
 
     @Autowired
@@ -321,17 +321,6 @@ public class ClientsControllerTest {
                         jsonPath("$.status") // Se espera una respuesta json donde el atributo status sea 403, que significa que el recurso se denegó.
                                 .value(403)
                 );
-    }
-
-
-    @Configuration
-    static class MockConfig {
-
-
-        @Bean
-        public ClientService clientService() {
-            return Mockito.mock(ClientService.class);
-        }
     }
 
 
