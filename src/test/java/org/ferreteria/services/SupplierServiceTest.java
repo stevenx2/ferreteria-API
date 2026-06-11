@@ -24,7 +24,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Sql({"classpath:/testcontainers/drop-scheme.sql", "classpath:/testcontainers/create-scheme.sql"})
-@SpringJUnitConfig(classes = {SupplierServiceTest.SupplierServiceCfg.class})
+@SpringJUnitConfig(classes = {ServicesCfg.class})
 @SqlMergeMode(SqlMergeMode.MergeMode.MERGE)
 public class SupplierServiceTest {
 
@@ -137,18 +137,4 @@ public class SupplierServiceTest {
     }
 
 
-
-
-
-
-
-    @Import({TransactionCfg.class, AppConfig.class})
-    @Configuration
-    static class SupplierServiceCfg{
-
-        @Bean
-        public DataSource dataSource() {
-            return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
-        }
-    }
 }

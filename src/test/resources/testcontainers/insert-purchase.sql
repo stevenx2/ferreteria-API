@@ -1,0 +1,1 @@
+INSERT INTO compras(fecha,id_proveedor) VALUES('2026-05-20',1)

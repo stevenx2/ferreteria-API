@@ -3,6 +3,7 @@ package org.ferreteria.controller;
 import org.ferreteria.security.SecurityCfg;
 import org.ferreteria.services.ClientService;
 import org.ferreteria.services.ProductService;
+import org.ferreteria.services.PurchaseService;
 import org.ferreteria.services.SupplierService;
 import org.ferreteria.web.WebConfig;
 import org.mockito.Mockito;
@@ -30,4 +31,7 @@ public class MockConfig {
 
     @Bean
     public SupplierService supplierService(){return Mockito.mock(SupplierService.class);}
+
+    @Bean
+    public PurchaseService purchaseService(){return Mockito.mock(PurchaseService.class);};
 }

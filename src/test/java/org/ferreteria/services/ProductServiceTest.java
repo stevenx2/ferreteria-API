@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Todos los tests relacionados con la clase ProductServiceImpl
  */
 @Sql({"classpath:/testcontainers/drop-scheme.sql", "classpath:/testcontainers/create-scheme.sql"})
-@SpringJUnitConfig({ProductServiceTest.ProductsServiceTestCfg.class, AppConfig.class})
+@SpringJUnitConfig({ServicesCfg.class})
 @SqlMergeMode(SqlMergeMode.MergeMode.MERGE)
 public class ProductServiceTest {
 
@@ -136,17 +136,4 @@ public class ProductServiceTest {
         assertEquals(7,productService.findAll().size()); // ahora existen 7 productos contando el nuevo
     }
 
-
-
-
-
-    @Import(TransactionCfg.class)
-    @Configuration
-    static class ProductsServiceTestCfg {
-
-        @Bean
-        public DataSource dataSource() {
-            return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
-        }
-    }
 }

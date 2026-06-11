@@ -22,7 +22,6 @@ public class ClientDto {
 
     }
 
-
     private Long id;
 
     @NotBlank(message = "{entities.error.name.blank}")

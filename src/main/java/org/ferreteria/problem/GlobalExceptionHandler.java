@@ -1,6 +1,9 @@
 package org.ferreteria.problem;
 
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,10 @@ import java.nio.file.AccessDeniedException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+
+    @Autowired
+    private MessageSource messageSource;
 
 
     /**
@@ -63,6 +70,20 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errorDetails,HttpStatus.CONFLICT);
+    }
+
+
+
+
+    @ExceptionHandler(InvalidFormatException.class)
+    public ResponseEntity<?> invalidFormatException(InvalidFormatException ex){
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST.value()
+        );
+
+        return new ResponseEntity<>(errorDetails,HttpStatus.BAD_REQUEST);
     }
 
 

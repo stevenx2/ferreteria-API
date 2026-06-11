@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Sql({"classpath:/testcontainers/drop-scheme.sql", "classpath:/testcontainers/create-scheme.sql"})
 @SqlMergeMode(SqlMergeMode.MergeMode.MERGE)
-@SpringJUnitConfig(classes = {ClientServiceTest.ClientServiceTestCfg.class})
+@SpringJUnitConfig(classes = {ServicesCfg.class})
 public class ClientServiceTest {
 
 
@@ -116,16 +116,6 @@ public class ClientServiceTest {
         assertThrows(ResourceNotFound.class, () -> service.findByName("fdfdfdfdf"));
     }
 
-
-    @Import(TransactionCfg.class)
-    @Configuration
-    static class ClientServiceTestCfg {
-
-        @Bean
-        public DataSource dataSource() {
-            return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
-        }
-    }
 
 
 }

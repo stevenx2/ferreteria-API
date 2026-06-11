@@ -1,0 +1,1 @@
+DELETE  FROM compras WHERE fecha = '2025-07-21' AND id_proveedor = 1
