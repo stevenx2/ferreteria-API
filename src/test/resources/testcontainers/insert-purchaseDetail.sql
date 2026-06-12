@@ -1,0 +1,1 @@
+INSERT INTO detalle_compra(id_compra,id_producto,cantidad) VALUES(1,1,200)

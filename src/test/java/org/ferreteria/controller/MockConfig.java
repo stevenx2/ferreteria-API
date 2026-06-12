@@ -1,10 +1,7 @@
 package org.ferreteria.controller;
 
 import org.ferreteria.security.SecurityCfg;
-import org.ferreteria.services.ClientService;
-import org.ferreteria.services.ProductService;
-import org.ferreteria.services.PurchaseService;
-import org.ferreteria.services.SupplierService;
+import org.ferreteria.services.*;
 import org.ferreteria.web.WebConfig;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
@@ -34,4 +31,7 @@ public class MockConfig {
 
     @Bean
     public PurchaseService purchaseService(){return Mockito.mock(PurchaseService.class);};
+
+    @Bean
+    public PurchaseDetailService purchaseDetailService(){return Mockito.mock(PurchaseDetailService.class);};
 }
