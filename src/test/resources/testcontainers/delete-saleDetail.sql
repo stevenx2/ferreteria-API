@@ -1,0 +1,1 @@
+DELETE FROM detalle_venta WHERE id_detalle = 7
