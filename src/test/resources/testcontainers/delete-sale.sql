@@ -1,0 +1,1 @@
+DELETE FROM VENTAS WHERE id_venta = 7

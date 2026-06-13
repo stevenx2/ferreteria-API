@@ -34,4 +34,7 @@ public class MockConfig {
 
     @Bean
     public PurchaseDetailService purchaseDetailService(){return Mockito.mock(PurchaseDetailService.class);};
+
+    @Bean
+    public SaleService saleService(){return Mockito.mock(SaleService.class);};
 }
